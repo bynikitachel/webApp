@@ -1,0 +1,33 @@
+{
+    "name": "webapp",
+    "version": "1.0.0",
+    "description": "",
+    "main": "home.js",
+    "dependencies": {
+        "style-loader": "^2.0.0"
+    },
+    "script": {
+        "watch": "babel source -d dist --presets env -w"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.3",
+        "babel-preset-env": "^1.7.0",
+        "css-loader": "^5.2.6",
+        "webpack": "^5.39.1",
+        "webpack-cli": "^4.7.2"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bynikitachel/webApp.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/bynikitachel/webApp/issues"
+    },
+    "homepage": "https://github.com/bynikitachel/webApp#readme"
+}
