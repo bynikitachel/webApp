@@ -1,5 +1,6 @@
 'use strict';
 import '/source/styles/style.css';
+import welcome from './login'
 
 
 //page
@@ -29,47 +30,5 @@ let exit = document.createElement('div');
 exit.innerHTML = 'Выход';
 exit.classList = 'exit';
 navigation.append(exit);
-
-window.onload = function() {
-    //container for modal
-    let login = document.createElement('div');
-    login.classList = 'login';
-    document.body.append(login);
-    //form for login
-    let loginForm = document.createElement('div');
-    loginForm.classList = 'login-form';
-    login.append(loginForm);
-    let closeLogin = document.createElement('span');
-    closeLogin.innerHTML = 'закрыть';
-    closeLogin.classList = 'close-login';
-    loginForm.append(closeLogin);
-    let descriptionLogin = document.createElement('div');
-    descriptionLogin.innerHTML = 'Прежде, чем войти, вам нужно зарегистрироваться или выйти!';
-    descriptionLogin.classList = 'description-login';
-    loginForm.append(descriptionLogin);
-    //form
-    let Form = document.createElement('form');
-    loginForm.append(Form);
-    //mail
-    let descriptionEmail = document.createElement('div');
-    descriptionEmail.innerHTML = 'Введите ваш E-mail:';
-    Form.append(descriptionEmail);
-    let inputEmail = document.createElement('input');
-    Form.append(inputEmail);
-    //pass
-    let descriptionPass = document.createElement('div');
-    descriptionPass.innerHTML = 'Введите ваш пароль:';
-    Form.append(descriptionPass);
-    let inputPassword = document.createElement('input');
-    Form.append(inputPassword);
-
-
-    closeLogin.onclick = function() {
-        login.style.display = 'none';
-    }
-    window.onclick = function(event) {
-        if (event.target == login) {
-            login.style.display = "none";
-        }
-    }
-}
+console.log(1231231);
+welcome();
