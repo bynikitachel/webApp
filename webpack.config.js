@@ -3,6 +3,9 @@ module.exports = {
     output: {
         filename: "build.js"
     },
+    experiments: {
+        topLevelAwait: true
+    },
     module: {
         rules: [{
                 test: /\.js/,
@@ -12,7 +15,12 @@ module.exports = {
             {
                 test: /\.css$/i,
                 use: ["style-loader", "css-loader"],
-            }
+            },
+            {
+                test: /stylesheet\.js$/i,
+                use: ['./a-pitching-loader.js'],
+                type: 'asset/source', // we set type to 'asset/source' as the loader will return a string
+            },
         ]
     }
 }
