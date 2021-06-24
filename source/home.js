@@ -88,22 +88,63 @@ json.forEach(((user) => {
     arrayJson.push(jsonUser, jsonCompany, jsonEmail, jsonPhone, jsonBalance, jsonDateOfReg);
 }));
 
+let header = ['Имя', 'Компания', 'Email', 'Телефон', 'Баланс', 'Дата регистрации'];
+
+const fields = ['name', 'company', 'email', 'phone', 'balance', 'registered']
 
 let clients = document.querySelector('#clients');
-let table = document.createElement('table');
-table.setAttribute('border', '1');
-clients.append(table);
+// let table = document.createElement('table');
+// let headTable = document.createElement('th');
+// header.forEach(field => { headTable.innerHTML = field })
+// table.setAttribute('border', '1');
+// clients.append(table);
 
-for (let i = 0; i < 600; i++) {
-    let header = ['Имя', 'Компания', 'Email', 'Телефон', 'Баланс', 'Дата регистрации'];
-    let headTable = document.createElement('th');
-    headTable.innerHTML = header[i];
-    if (i < 6) {
-        table.append(headTable);
+// const row = table.insertRow(1);
+
+function generate_table(users) {
+    const tbl = document.createElement("table");
+    const tblBody = document.createElement("tbody");
+    const tableHead = document.createElement("tr");
+    for (let k = 0; k < header.length; k++) {
+        // Create a <td> element and a text node, make the text
+        // node the contents of the <td>, and put the <td> at
+        // the end of the table row
+        const cell = document.createElement("td");
+        const cellText = document.createTextNode(header[k]);
+        cell.appendChild(cellText);
+        tableHead.appendChild(cell);
     }
-    let tr = document.createElement('tr');
-    let td = document.createElement('td');
+    clients.appendChild(tableHead);
 
+    // creating all cells
+    users.forEach(e => {
+        var row = document.createElement("tr");
+
+        for (var j = 0; j < fields.length; j++) {
+            // Create a <td> element and a text node, make the text
+            // node the contents of the <td>, and put the <td> at
+            // the end of the table row
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(e[fields[j]]);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+        }
+
+        // add the row to the end of the table body
+        tblBody.appendChild(row);
+    })
+
+    // put the <tbody> in the <table>
+    tbl.appendChild(tblBody);
+    // appends <table> into <body>
+    clients.appendChild(tbl);
+    // sets the border attribute of tbl to 2;
+    tbl.setAttribute("border", "2");
+}
+
+generate_table(json)
+
+createTableRow([1, 2, 3, 4, 5])
     // if (i % 6 === 0) {
     //     table.append(tr);
 
@@ -122,7 +163,7 @@ for (let i = 0; i < 600; i++) {
     // }
 
 
-}
+
 // for (let i = 0; i < 600; i++) {
 
 
