@@ -17,13 +17,13 @@
     margin-top: 150px;
     background: #fff;
     padding: 30px;
-    border-radius: 20px;
+    /* border-radius: 20px; */
 }
 
 .Form {
     background: #ba55d3;
     padding: 20px;
-    border-radius: 20px;
+    /* border-radius: 20px; */
     display: inline-block;
     /* width: 90%; */
 }
@@ -73,7 +73,7 @@
 
 input {
     display: block;
-    border-radius: 20px;
+    /* border-radius: 20px; */
     border: none;
     height: 30px;
     padding-left: 10px;
@@ -86,8 +86,8 @@ input {
     /* margin: 10px 0 10px 0; */
     /* border-radius: 20px; */
     border: none;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    /* border-top-left-radius: 10px; */
+    /* border-bottom-left-radius: 10px; */
     height: 25px;
     padding: 5px;
     /* display: block; */
@@ -95,8 +95,8 @@ input {
 }
 
 .btn-sign {
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    /* border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px; */
     border: none;
     height: 25px;
     padding: 5px;
@@ -112,7 +112,7 @@ input {
     width: 200px;
     height: 190px;
     margin-left: 30px;
-    border-radius: 20px;
+    /* border-radius: 20px; */
 }
 
 .login-done {}

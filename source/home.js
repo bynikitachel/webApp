@@ -77,34 +77,56 @@ let jsonPhone = [];
 let jsonBalance = [];
 let jsonDateOfReg = [];
 let arrayJson = [];
+let Date = [];
+let mans = 0;
+let womans = 0;
+let MaxBalance = 0;
+let arrBalance = [];
+let strBalance;
+let arrDate = [];
+let strDate;
+let newBalance = [];
+let newDate = [];
 
 json.forEach(((user) => {
     jsonUser = user.name;
     jsonCompany = user.company;
     jsonEmail = user.email;
     jsonPhone = user.phone;
-    jsonBalance = user.balance;
-    jsonDateOfReg = user.registered;
-    arrayJson.push(jsonUser, jsonCompany, jsonEmail, jsonPhone, jsonBalance, jsonDateOfReg);
+    jsonBalance.push(user.balance);
+    // jsonDateOfReg = user.registered;
+
+
 }));
+// console.log(jsonBalance);
+
+for (let i = 0; i < jsonBalance.length; i++) {
+    strBalance = jsonBalance[i].split('');
+    strBalance.splice(0, 1);
+    strBalance.splice(1, 1);
+    arrBalance = strBalance.join('');
+    newBalance.push(arrBalance);
+    MaxBalance = Math.max.apply(null, newBalance);
+}
+
 
 let header = ['Имя', 'Компания', 'Email', 'Телефон', 'Баланс', 'Дата регистрации'];
 
-const fields = ['name', 'company', 'email', 'phone', 'balance', 'registered']
+const fields = ['name', 'company', 'email', 'phone', 'balance'];
+// const fields = [jsonUser, jsonCompany, jsonEmail, jsonPhone, jsonBalance, newDate];
 
 let clients = document.querySelector('#clients');
-// let table = document.createElement('table');
-// let headTable = document.createElement('th');
-// header.forEach(field => { headTable.innerHTML = field })
-// table.setAttribute('border', '1');
-// clients.append(table);
-
-// const row = table.insertRow(1);
+let statistic = document.createElement('ul');
+statistic.classList = 'statistic';
+statistic.innerHTML = 'Некоторая статистика по клиентам:';
+clients.append(statistic);
 
 function generate_table(users) {
     const tbl = document.createElement("table");
+    tbl.style.width = '95%';
     const tblBody = document.createElement("tbody");
     const tableHead = document.createElement("tr");
+    tableHead.classList = 'table-head';
     for (let k = 0; k < header.length; k++) {
         // Create a <td> element and a text node, make the text
         // node the contents of the <td>, and put the <td> at
@@ -114,20 +136,45 @@ function generate_table(users) {
         cell.appendChild(cellText);
         tableHead.appendChild(cell);
     }
-    clients.appendChild(tableHead);
+    tbl.appendChild(tableHead);
 
     // creating all cells
     users.forEach(e => {
-        var row = document.createElement("tr");
+        let row = document.createElement("tr");
 
-        for (var j = 0; j < fields.length; j++) {
+        for (let j = 0; j < fields.length + 1; j++) {
             // Create a <td> element and a text node, make the text
             // node the contents of the <td>, and put the <td> at
             // the end of the table row
-            var cell = document.createElement("td");
-            var cellText = document.createTextNode(e[fields[j]]);
+            let cell = document.createElement("td");
+            let cell1 = document.createElement("td");
+            cell.classList = 'cell';
+            if (e.isActive === false) {
+                cell.style.background = 'gray';
+                cell.style.color = '#fff';
+            }
+            if (j === fields.length) {
+                if (e.gender === 'male') {
+                    mans++;
+                } else if (e.gender === 'female') {
+                    womans++;
+                }
+                Date.push(e.registered);
+                for (let i = 0; i < Date.length; i++) {
+                    strDate = Date[i].split('');
+                    strDate.splice(10, 16);
+                    // let nDate = new Date();
+                    arrDate.push(strDate.join(''));
+                }
+            }
+            // let a = [1, 2];
+            let cellText = document.createTextNode(e[fields[j]]);
+            // let cell1Text = document.createTextNode(a[j]);
+
             cell.appendChild(cellText);
             row.appendChild(cell);
+            // cell1.appendChild(cell1Text);
+            // row.appendChild(cell1);
         }
 
         // add the row to the end of the table body
@@ -139,35 +186,30 @@ function generate_table(users) {
     // appends <table> into <body>
     clients.appendChild(tbl);
     // sets the border attribute of tbl to 2;
-    tbl.setAttribute("border", "2");
+    // tbl.setAttribute("border", "2");
+}
+generate_table(json);
+console.log(arrDate);
+let goUp = document.createElement('button');
+goUp.innerHTML = 'К началу страницы';
+goUp.classList = 'go-up';
+clients.append(goUp);
+
+goUp.onclick = function() {
+    window.scrollTo(0, 0);
 }
 
-generate_table(json)
+for (let i = 0; i < 3; i++) {
+    let statisticItem = document.createElement('li');
+    if (i === 0) {
+        statisticItem.innerHTML = 'Мужчин: ' + mans;
+    } else if (i === 1) {
+        statisticItem.innerHTML = 'Женщин: ' + womans;
+    } else {
+        statisticItem.innerHTML = 'Наибольший баланс: ' + '$' + MaxBalance;
+    }
 
-createTableRow([1, 2, 3, 4, 5])
-    // if (i % 6 === 0) {
-    //     table.append(tr);
+    statistic.append(statisticItem);
+}
 
-    // } else {
-    //     td.innerHTML = arrayJson[i];
-    //     tr.append(td);
-    // }
-
-
-    // if (i % 6 === 0) {
-    //     let tr = document.createElement('tr');
-    //     table.append(tr);
-    //     let td = document.createElement('td');
-    //     td.innerHTML = arrayJson[i];
-    //     tr.append(td);
-    // }
-
-
-
-// for (let i = 0; i < 600; i++) {
-
-
-
-
-// }
 // welcome();

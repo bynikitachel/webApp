@@ -48,10 +48,10 @@ window.onload = function() {
     btnSign.type = 'submit';
     Form.append(btnSign);
 
-    let cats = document.createElement('img');
-    cats.src = '/source/img/obnimashki-kartinki-prikolnie-1.jpg';
-    cats.classList = 'cats';
-    loginForm.append(cats);
+    // let cats = document.createElement('img');
+    // cats.src = '/source/img/obnimashki-kartinki-prikolnie-1.jpg';
+    // cats.classList = 'cats';
+    // loginForm.append(cats);
 
     closeLogin.onclick = function() {
         login.style.display = 'none';
