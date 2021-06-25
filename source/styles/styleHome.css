@@ -7,12 +7,13 @@ body {
 
 .container {
     background: #4b0082;
-    height: calc(100% - 183px);
-    /* height: 100%; */
+    /* height: calc(100% - 263px); */
+    /* height: 100vh; */
+    height: calc(100% - 80px);
     width: 90%;
     margin: 0 auto;
     /* padding-bottom: 10px; */
-    padding-top: 40px;
+    padding: 40px 0 40px 0;
     /* overflow: auto; */
 }
 
@@ -71,15 +72,20 @@ a {
 }
 
 .navigation-content.active {
-    padding: 20px;
+    padding: 0 40px 0 40px;
     display: block;
     background: #fff;
-    margin: 0 50px 50px 50px;
+    /* margin: 0 50px 50px 50px; */
     /* margin: 0 auto; */
     /* min-height: calc(100% - 103px); */
     /* height: 80vh; */
+    /* height: calc(100% - 183px); */
+    overflow: auto;
     height: 100%;
-    /* overflow: auto; */
+}
+
+#map {
+    overflow: hidden;
 }
 
 .table-head {

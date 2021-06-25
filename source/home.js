@@ -21,6 +21,12 @@ let navigationList = document.createElement('ul');
 navigationList.classList = 'navigationList';
 navigation.append(navigationList);
 
+let containerContent = document.createElement('div');
+containerContent.style.height = 'calc(100% - 183px)';
+containerContent.style.background = '#fff';
+containerContent.style.margin = '0 50px 0px 50px';
+containerContent.style.padding = '40px 0 40px 0';
+container.append(containerContent);
 
 for (let i = 0; i < 3; i++) {
     let navItems = ['Главная', 'Клиенты', 'Карта'];
@@ -33,12 +39,15 @@ for (let i = 0; i < 3; i++) {
     navigationListItem.classList = classesLi[i];
     navigationList.append(navigationListItem);
     navigationListItem.append(aNav);
+
+
+
     let content = document.createElement('div');
     let classesDiv = ['navigation-content active', 'navigation-content', 'navigation-content'];
     let idDiv = ['main', 'clients', 'map'];
     content.classList = classesDiv[i];
     content.id = idDiv[i];
-    container.append(content);
+    containerContent.append(content);
 }
 
 function tab(idConteiner, classTab, classPanel) {
@@ -110,10 +119,9 @@ for (let i = 0; i < jsonBalance.length; i++) {
 }
 
 
-let header = ['Имя', 'Компания', 'Email', 'Телефон', 'Баланс', 'Дата регистрации'];
+let header = ['Номер п/п', 'Имя', 'Компания', 'Email', 'Телефон', 'Баланс', 'Дата регистрации'];
 
-const fields = ['name', 'company', 'email', 'phone', 'balance', 'registered', 'button'];
-// const fields = [jsonUser, jsonCompany, jsonEmail, jsonPhone, jsonBalance, newDate];
+const fields = ['numbers', 'name', 'company', 'email', 'phone', 'balance', 'registered', 'button'];
 
 let clients = document.querySelector('#clients');
 let statistic = document.createElement('ul');
@@ -123,7 +131,7 @@ clients.append(statistic);
 
 function generateTable(users) {
     const tbl = document.createElement("table");
-    tbl.style.width = '95%';
+    tbl.style.width = '100%';
     tbl.style.margin = '0 auto'
     const tblBody = document.createElement("tbody");
     const tableHead = document.createElement("tr");
@@ -135,7 +143,7 @@ function generateTable(users) {
         tableHead.appendChild(cell);
     }
     tbl.appendChild(tableHead);
-
+    let k = 0;
     // creating all cells
     users.forEach((e, index) => {
             let row = document.createElement("tr");
@@ -153,6 +161,9 @@ function generateTable(users) {
                     cell.style.color = '#fff';
                 }
                 let content;
+                if (fields[j] === 'numbers') {
+                    cell.append(index + 1);
+                }
                 if (fields[j] === 'registered') {
                     const formattedDate = e[fields[j]].split(/\s/).join('')
                     const date = new Date(`${formattedDate}`)
@@ -222,7 +233,10 @@ function generateTable(users) {
                 } else {
                     content = document.createTextNode(e[fields[j]]);
                 }
-                cell.appendChild(content);
+                if (fields[j] === 'numbers') {} else {
+                    cell.appendChild(content);
+                }
+
                 row.appendChild(cell);
             }
             // add the row to the end of the table body
@@ -242,7 +256,8 @@ goUp.classList = 'go-up';
 clients.append(goUp);
 
 goUp.onclick = function() {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
+    clients.scrollTo(0, 0);
 }
 
 for (let i = 0; i < 3; i++) {
@@ -258,5 +273,19 @@ for (let i = 0; i < 3; i++) {
     statistic.append(statisticItem);
 }
 
+
+let maps = document.querySelector('#map');
+
+let iframe = document.createElement('iframe');
+iframe.setAttribute('src', "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d63252.14515962143!2d27.59535414597395!3d53.90292384772611!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sru!2sby!4v1624611767122!5m2!1sru!2sby");
+iframe.setAttribute('width', '100%');
+iframe.setAttribute('height', '100%');
+iframe.style.border = 'none';
+maps.append(iframe);
+
+let markers = document.createElement('script');
+markers.setAttribute('src', "https://maps.googleapis.com/maps/api/js?key=AIzaSyDfkRDgZsgxKYS5UNpB_zUnKIKR3oHkPuM&callback=initMap&libraries=&v=weekly");
+markers.setAttribute('async', '');
+maps.append(markers);
 // welcome();
 // map();
