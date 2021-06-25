@@ -1,4 +1,4 @@
-window.onload = function () {
+window.onload = function() {
     //container for modal
     let login = document.createElement('div');
     login.classList = 'login';
@@ -46,23 +46,22 @@ window.onload = function () {
     btnSign.innerHTML = 'Зарегистрирваться';
     btnSign.classList = 'btn-sign';
     Form.append(btnSign);
-    let s = new Date()
 
     // let cats = document.createElement('img');
     // cats.src = '/source/img/obnimashki-kartinki-prikolnie-1.jpg';
     // cats.classList = 'cats';
     // loginForm.append(cats);
 
-    closeLogin.onclick = function () {
+    closeLogin.onclick = function() {
         login.style.display = 'none';
     }
-    window.onclick = function (event) {
+    window.onclick = function(event) {
         if (event.target === login) {
             login.style.display = "none";
         }
     }
     let users = [];
-    btnSign.onclick = function (event) {
+    btnSign.onclick = function(event) {
         users.push(Form.elements[0].value + ' ' + Form.elements[1].value);
         localStorage.setItem('inputEmail', inputEmail.value);
         localStorage.setItem('inputPassword', inputPassword.value);
@@ -78,7 +77,7 @@ window.onload = function () {
             loginDone.append(closeLogin);
         }
     }
-    btnLogin.onclick = function (event) {
+    btnLogin.onclick = function(event) {
         let storedEmail = localStorage.getItem('inputEmail');
         let storedPass = localStorage.getItem('inputPassword');
         if (inputEmail.value == storedEmail && inputPassword.value == storedPass) {
