@@ -77,7 +77,6 @@ let jsonPhone = [];
 let jsonBalance = [];
 let jsonDateOfReg = [];
 let arrayJson = [];
-let Date = [];
 let mans = 0;
 let womans = 0;
 let MaxBalance = 0;
@@ -112,7 +111,7 @@ for (let i = 0; i < jsonBalance.length; i++) {
 
 let header = ['Имя', 'Компания', 'Email', 'Телефон', 'Баланс', 'Дата регистрации'];
 
-const fields = ['name', 'company', 'email', 'phone', 'balance'];
+const fields = ['name', 'company', 'email', 'phone', 'balance', 'registered', 'button'];
 // const fields = [jsonUser, jsonCompany, jsonEmail, jsonPhone, jsonBalance, newDate];
 
 let clients = document.querySelector('#clients');
@@ -124,13 +123,11 @@ clients.append(statistic);
 function generate_table(users) {
     const tbl = document.createElement("table");
     tbl.style.width = '95%';
+    tbl.style.margin = '0 auto'
     const tblBody = document.createElement("tbody");
     const tableHead = document.createElement("tr");
     tableHead.classList = 'table-head';
     for (let k = 0; k < header.length; k++) {
-        // Create a <td> element and a text node, make the text
-        // node the contents of the <td>, and put the <td> at
-        // the end of the table row
         const cell = document.createElement("td");
         const cellText = document.createTextNode(header[k]);
         cell.appendChild(cellText);
@@ -139,54 +136,65 @@ function generate_table(users) {
     tbl.appendChild(tableHead);
 
     // creating all cells
-    users.forEach(e => {
+    users.forEach((e, index) => {
         let row = document.createElement("tr");
-
-        for (let j = 0; j < fields.length + 1; j++) {
-            // Create a <td> element and a text node, make the text
-            // node the contents of the <td>, and put the <td> at
-            // the end of the table row
+        row.id = index;
+        if (e.gender === 'male') {
+            mans++;
+        } else if (e.gender === 'female') {
+            womans++;
+        }
+        for (let j = 0; j < fields.length; j++) {
             let cell = document.createElement("td");
-            let cell1 = document.createElement("td");
             cell.classList = 'cell';
             if (e.isActive === false) {
                 cell.style.background = 'gray';
                 cell.style.color = '#fff';
             }
-            if (j === fields.length) {
-                if (e.gender === 'male') {
-                    mans++;
-                } else if (e.gender === 'female') {
-                    womans++;
-                }
-                Date.push(e.registered);
-                for (let i = 0; i < Date.length; i++) {
-                    strDate = Date[i].split('');
-                    strDate.splice(10, 16);
-                    // let nDate = new Date();
-                    arrDate.push(strDate.join(''));
-                }
+            let content;
+            if (fields[j] === 'registered') {
+                const formattedDate = e[fields[j]].split(/\s/).join('')
+                const date = new Date(`${formattedDate}`)
+                content = document.createTextNode(`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`);
             }
-            // let a = [1, 2];
-            let cellText = document.createTextNode(e[fields[j]]);
-            // let cell1Text = document.createTextNode(a[j]);
-
-            cell.appendChild(cellText);
+            else if (fields[j] === 'button') {
+                cell.classList = 'cell cell-button';
+                content = document.createElement('button');
+                content.innerHTML = 'x';
+                content.className = `remove-row-${index} content-button`;
+                if (row.lastChild.style.background === 'gray') {
+                    content.style.background = 'gray';
+                } else {
+                    content.style.background = '#f8e391';
+                }
+                content.addEventListener('click', () => {
+                    let containerDelRow = document.createElement('div');
+                    containerDelRow.classList = 'login';
+                    document.body.append(containerDelRow);
+                    let DelRow = document.createElement('div');
+                    DelRow.classList = 'login-form';
+                    containerDelRow.append(DelRow);
+                    window.onclick = function (event) {
+                        if (event.target === containerDelRow) {
+                            containerDelRow.style.display = "none";
+                        }
+                    }
+                    // document.getElementById(index).remove();
+                })
+            } else {
+                content = document.createTextNode(e[fields[j]]);
+            }
+            cell.appendChild(content);
             row.appendChild(cell);
-            // cell1.appendChild(cell1Text);
-            // row.appendChild(cell1);
         }
-
         // add the row to the end of the table body
         tblBody.appendChild(row);
     })
-
     // put the <tbody> in the <table>
     tbl.appendChild(tblBody);
     // appends <table> into <body>
     clients.appendChild(tbl);
     // sets the border attribute of tbl to 2;
-    // tbl.setAttribute("border", "2");
 }
 generate_table(json);
 console.log(arrDate);
@@ -195,7 +203,7 @@ goUp.innerHTML = 'К началу страницы';
 goUp.classList = 'go-up';
 clients.append(goUp);
 
-goUp.onclick = function() {
+goUp.onclick = function () {
     window.scrollTo(0, 0);
 }
 
