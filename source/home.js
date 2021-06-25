@@ -1,5 +1,5 @@
 'use strict';
-import '/source/styles/style.css';
+import '/source/styles/styleLogin.css';
 import '/source/styles/styleHome.css';
 import welcome from './login';
 import map from './map';
@@ -135,15 +135,15 @@ function generateTable(users) {
     tbl.style.margin = '0 auto'
     const tblBody = document.createElement("tbody");
     const tableHead = document.createElement("tr");
-    tableHead.classList = 'table-head';
+    // tableHead.classList = 'table-head';
     for (let k = 0; k < header.length; k++) {
         const cell = document.createElement("td");
+        cell.classList = 'table-head';
         const cellText = document.createTextNode(header[k]);
         cell.appendChild(cellText);
         tableHead.appendChild(cell);
     }
     tbl.appendChild(tableHead);
-    let k = 0;
     // creating all cells
     users.forEach((e, index) => {
             let row = document.createElement("tr");
@@ -170,11 +170,15 @@ function generateTable(users) {
                     content = document.createTextNode(`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`);
                 } else if (fields[j] === 'button') {
                     cell.classList = 'cell cell-button';
+                    // cell.style.display = 'flex';
+                    cell.style.height = '100%';
+                    // cell.style.padding = '0';
                     content = document.createElement('button');
                     content.innerHTML = 'x';
                     content.className = `remove-row-${index} content-button`;
                     if (row.lastChild.style.background === 'gray') {
                         content.style.background = 'gray';
+                        // content.style.padding = '10px';
                     } else {
                         content.style.background = '#f8e391';
                     }

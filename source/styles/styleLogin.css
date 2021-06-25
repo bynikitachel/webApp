@@ -15,7 +15,7 @@
 .info {
     position: relative;
     margin: auto;
-    width: 25%;
+    width: 15%;
     margin-top: 150px;
     background: #fff;
     padding: 30px;
@@ -30,8 +30,8 @@
     background: #ba55d3;
     padding: 20px;
     /* border-radius: 20px; */
-    display: inline-block;
-    /* width: 90%; */
+    display: block;
+    /* width: 100%; */
 }
 
 .close-login,
@@ -94,14 +94,14 @@ input {
     /* border-radius: 20px; */
     border: none;
     height: 30px;
-    padding-left: 10px;
-    /* width: 96%; */
+    padding: 0 4% 0 4%;
+    width: 92%;
     outline: none;
     background: #dda0dd;
 }
 
 .btn-login {
-    /* margin: 10px 0 10px 0; */
+    margin: 0;
     /* border-radius: 20px; */
     border: none;
     /* border-top-left-radius: 10px; */

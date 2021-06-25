@@ -47,11 +47,6 @@ window.onload = function() {
     btnSign.classList = 'btn-sign';
     Form.append(btnSign);
 
-    // let cats = document.createElement('img');
-    // cats.src = '/source/img/obnimashki-kartinki-prikolnie-1.jpg';
-    // cats.classList = 'cats';
-    // loginForm.append(cats);
-
     closeLogin.onclick = function() {
         login.style.display = 'none';
     }
@@ -60,6 +55,15 @@ window.onload = function() {
             login.style.display = "none";
         }
     }
+    const newUser = { mail, pass };
+    const regUsers = localStorage.getItem('RegisteredUsers');
+    if (regUsers) {
+        regUsers.push(newUser);
+        localStorage.setItem(regUser);
+    } else {
+        localStorage.setItem('RegisteredUsers', [newUser]);
+    }
+
     let users = [];
     btnSign.onclick = function(event) {
         users.push(Form.elements[0].value + ' ' + Form.elements[1].value);
