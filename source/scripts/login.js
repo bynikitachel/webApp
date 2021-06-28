@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
     //container for modal
     let login = document.createElement('div');
     login.classList = 'login';
@@ -24,6 +24,7 @@ window.onload = function() {
     descriptionEmail.classList = 'description-form';
     Form.append(descriptionEmail);
     let inputEmail = document.createElement('input');
+    inputEmail.placeholder = 'Почта';
     inputEmail.required = '1';
     Form.append(inputEmail);
     //pass
@@ -32,6 +33,7 @@ window.onload = function() {
     descriptionPass.classList = 'description-form';
     Form.append(descriptionPass);
     let inputPassword = document.createElement('input');
+    inputPassword.placeholder = 'Пароль';
     inputPassword.required = '1';
     inputPassword.style.marginBottom = '20px';
     inputPassword.type = 'password'
@@ -43,45 +45,64 @@ window.onload = function() {
     btnLogin.type = 'submit';
     Form.append(btnLogin);
     let btnSign = document.createElement('button');
+    btnSign.type = 'submit';
     btnSign.innerHTML = 'Зарегистрирваться';
     btnSign.classList = 'btn-sign';
     Form.append(btnSign);
 
-    closeLogin.onclick = function() {
+    closeLogin.onclick = function () {
         login.style.display = 'none';
     }
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target === login) {
             login.style.display = "none";
         }
     }
-    const newUser = { mail, pass };
-    const regUsers = localStorage.getItem('RegisteredUsers');
-    if (regUsers) {
-        regUsers.push(newUser);
-        localStorage.setItem(regUser);
-    } else {
-        localStorage.setItem('RegisteredUsers', [newUser]);
-    }
+
+    // if (inputEmail.value.length === 0 || inputPassword.value.length === 0) {
+    //     btnSign.disabled = 'true';
+    // }
 
     let users = [];
-    btnSign.onclick = function(event) {
-        users.push(Form.elements[0].value + ' ' + Form.elements[1].value);
-        localStorage.setItem('inputEmail', inputEmail.value);
-        localStorage.setItem('inputPassword', inputPassword.value);
-        // event.preventDefault();
-        if (inputEmail.value.length == 0 || inputPassword.value.length == 0) {
-            btnSign.disabled = 'true';
+    btnSign.onclick = function (event) {
+        event.preventDefault();
+        let mail, pass;
+        const newUser = { mail, pass };
+        newUser.mail = inputEmail.value;
+        newUser.pass = inputPassword.value;
+        const regUsers = JSON.Parse(localStorage.getItem('RegisteredUsers'));
+        if (regUsers) {
+            regUsers.push(newUser);
+            localStorage.setItem(regUser);
         } else {
-            loginForm.style.display = 'none';
-            let loginDone = document.createElement('div');
-            loginDone.innerHTML = 'Вы успешно зарегистрировались!';
-            loginDone.classList = 'login-done';
-            login.append(loginDone);
-            loginDone.append(closeLogin);
+            localStorage.setItem('RegisteredUsers', [newUser]);
         }
+
+        loginForm.style.display = 'none';
+        let loginDone = document.createElement('div');
+        loginDone.innerHTML = 'Вы успешно зарегистрировались!';
+        loginDone.classList = 'login-done';
+        login.append(loginDone);
+        loginDone.append(closeLogin);
+        Form.submit();
+
+
+
+        // users.push(Form.elements[0].value + ' ' + Form.elements[1].value);
+        // localStorage.setItem('inputEmail', inputEmail.value);
+        // localStorage.setItem('inputPassword', inputPassword.value);
+        // event.preventDefault();
+
+        // else {
+        //     loginForm.style.display = 'none';
+        //     let loginDone = document.createElement('div');
+        //     loginDone.innerHTML = 'Вы успешно зарегистрировались!';
+        //     loginDone.classList = 'login-done';
+        //     login.append(loginDone);
+        //     loginDone.append(closeLogin);
+        // }
     }
-    btnLogin.onclick = function(event) {
+    btnLogin.onclick = function (event) {
         let storedEmail = localStorage.getItem('inputEmail');
         let storedPass = localStorage.getItem('inputPassword');
         if (inputEmail.value == storedEmail && inputPassword.value == storedPass) {
