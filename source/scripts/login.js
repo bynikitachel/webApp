@@ -1,4 +1,5 @@
-window.onload = function () {
+window.onload = function(event) {
+    event.preventDefault();
     //container for modal
     let login = document.createElement('div');
     login.classList = 'login';
@@ -9,9 +10,8 @@ window.onload = function () {
     login.append(loginForm);
     let closeLogin = document.createElement('span');
     closeLogin.classList = 'close-login';
-    loginForm.append(closeLogin);
     let descriptionLogin = document.createElement('p');
-    descriptionLogin.innerHTML = 'Прежде, чем войти, вам нужно зарегистрироваться!';
+    descriptionLogin.innerHTML = 'Прежде, чем получить доступ к сайту, вам нужно авторизироваться!';
     descriptionLogin.classList = 'description-login';
     loginForm.append(descriptionLogin);
     //form
@@ -27,6 +27,18 @@ window.onload = function () {
     inputEmail.placeholder = 'Почта';
     inputEmail.required = '1';
     Form.append(inputEmail);
+
+    let formatMailErrorWindow = document.createElement('div');
+
+    function appendError() {
+        formatMailErrorWindow.innerHTML = 'Неверный формат Email';
+        formatMailErrorWindow.classList = 'format-mail-error-window';
+        Form.append(formatMailErrorWindow);
+    }
+    appendError();
+
+
+
     //pass
     let descriptionPass = document.createElement('div');
     descriptionPass.innerHTML = 'Введите ваш пароль:';
@@ -35,47 +47,83 @@ window.onload = function () {
     let inputPassword = document.createElement('input');
     inputPassword.placeholder = 'Пароль';
     inputPassword.required = '1';
-    inputPassword.style.marginBottom = '20px';
+    // inputPassword.style.marginBottom = '20px';
     inputPassword.type = 'password'
     Form.append(inputPassword);
+
+    let invalidDataMessage = document.createElement('div');
+
+    function ivalidData() {
+        invalidDataMessage.innerHTML = 'Неверный логин или пароль';
+        invalidDataMessage.classList = 'invalid-data-message';
+        Form.append(invalidDataMessage);
+    }
+    ivalidData();
 
     let btnLogin = document.createElement('button');
     btnLogin.innerHTML = 'Войти';
     btnLogin.classList = 'btn-login';
     btnLogin.type = 'submit';
+    btnLogin.disabled = 'true';
     Form.append(btnLogin);
     let btnSign = document.createElement('button');
     btnSign.type = 'submit';
-    btnSign.innerHTML = 'Зарегистрирваться';
+    btnSign.disabled = 'true';
+    btnSign.innerHTML = 'Зарегистрироваться';
     btnSign.classList = 'btn-sign';
     Form.append(btnSign);
 
-    closeLogin.onclick = function () {
+    closeLogin.onclick = function() {
         login.style.display = 'none';
     }
-    window.onclick = function (event) {
-        if (event.target === login) {
-            login.style.display = "none";
+
+    for (let i = 0; i < document.querySelectorAll('input').length; i++) {
+        document.querySelectorAll('input')[i].onkeyup = function() {
+            if (inputEmail.value === '' || inputPassword.value === '') {
+                btnSign.setAttribute('disabled', true);
+                btnLogin.setAttribute('disabled', true);
+            } else {
+                btnSign.removeAttribute('disabled');
+                btnLogin.removeAttribute('disabled');
+            }
         }
     }
 
-    // if (inputEmail.value.length === 0 || inputPassword.value.length === 0) {
-    //     btnSign.disabled = 'true';
-    // }
 
-    let users = [];
-    btnSign.onclick = function (event) {
+    //registration
+    function validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    function formatMailError() {
+        if (validateEmail(inputEmail.value)) {} else {
+            console.log('ты pidor')
+            formatMailErrorWindow.style.display = 'block';
+            return 0;
+        }
+    }
+
+    btnSign.onclick = function(event) {
         event.preventDefault();
-        let mail, pass;
-        const newUser = { mail, pass };
+
+        formatMailError();
+        if (formatMailError() === 0) {
+            return;
+        }
+
+        const newUser = { mail: this.mail, pass: this.pass };
         newUser.mail = inputEmail.value;
         newUser.pass = inputPassword.value;
-        const regUsers = JSON.Parse(localStorage.getItem('RegisteredUsers'));
+
+        let regUsers = [];
+        regUsers = JSON.parse(localStorage.getItem('RegisteredUsers'));
         if (regUsers) {
             regUsers.push(newUser);
-            localStorage.setItem(regUser);
+            localStorage.setItem('RegisteredUsers', JSON.stringify(regUsers));
         } else {
-            localStorage.setItem('RegisteredUsers', [newUser]);
+            regUsers = [newUser];
+            localStorage.setItem('RegisteredUsers', JSON.stringify(regUsers));
         }
 
         loginForm.style.display = 'none';
@@ -84,45 +132,27 @@ window.onload = function () {
         loginDone.classList = 'login-done';
         login.append(loginDone);
         loginDone.append(closeLogin);
-        Form.submit();
-
-
-
-        // users.push(Form.elements[0].value + ' ' + Form.elements[1].value);
-        // localStorage.setItem('inputEmail', inputEmail.value);
-        // localStorage.setItem('inputPassword', inputPassword.value);
-        // event.preventDefault();
-
-        // else {
-        //     loginForm.style.display = 'none';
-        //     let loginDone = document.createElement('div');
-        //     loginDone.innerHTML = 'Вы успешно зарегистрировались!';
-        //     loginDone.classList = 'login-done';
-        //     login.append(loginDone);
-        //     loginDone.append(closeLogin);
-        // }
     }
-    btnLogin.onclick = function (event) {
-        let storedEmail = localStorage.getItem('inputEmail');
-        let storedPass = localStorage.getItem('inputPassword');
-        if (inputEmail.value == storedEmail && inputPassword.value == storedPass) {
-            // loginForm.style.display = 'none';
+    btnLogin.onclick = function(event) {
+        event.preventDefault();
+        let users = JSON.parse(localStorage.getItem('RegisteredUsers'));
+        console.log(users);
+        let chekedUser = users.find((e) => e.mail === inputEmail.value && e.pass === inputPassword.value);
+        if (chekedUser) {
+            localStorage.setItem('loggedIn', true)
+            loginForm.style.display = 'none';
             let loginDone = document.createElement('div');
-            loginDone.innerHTML = 'Вы уже вошли!';
+            loginDone.innerHTML = 'Вы успешно вошли!';
             loginDone.classList = 'login-done';
-
-            let loginDoneS = document.querySelector('.login-done');
-            console.log(loginDoneS)
-            if (loginDoneS === null) {
-                login.append(loginDone);
-                loginDone.append(closeLogin);
-            } else {
-
-            }
-
+            login.append(loginDone);
+            loginDone.append(closeLogin);
         } else {
+            invalidDataMessage.style.display = 'block';
+        }
+        let loggedIn = localStorage.getItem('loggedIn');
+        if (loggedIn === true) {
 
         }
-    }
 
+    }
 }
