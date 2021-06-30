@@ -2,7 +2,7 @@
     "name": "webapp",
     "version": "1.0.0",
     "description": "",
-    "main": "home.js",
+    "main": "script.js",
     "dependencies": {
         "style-loader": "^2.0.0"
     },

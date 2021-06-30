@@ -1,9 +1,10 @@
-// 'use strict';
-import '/source/styles/styleLogin.css';
-import '/source/styles/styleHome.css';
-import welcome from './login';
-// import map from './map';
+import * as login from './login';
 
+import '/src/styles/styleLogin.css';
+import '/src/styles/styleHome.css';
+
+
+// import * as home from './home';
 
 //container
 let container = document.createElement('div');
@@ -55,7 +56,7 @@ function tab(idConteiner, classTab, classPanel) {
     let tabs = [...document.querySelectorAll(classTab)],
         panels = [...document.querySelectorAll(classPanel)]
 
-    document.getElementById(idConteiner).addEventListener('click', function (e) {
+    document.getElementById(idConteiner).addEventListener('click', function(e) {
         e.preventDefault();
         let compareTab = tabs.filter(tab => tab === e.target.parentElement)
         if (e.target.parentElement === compareTab[0]) {
@@ -164,107 +165,107 @@ function generateTable(users) {
     tbl.appendChild(tableHead);
     // creating all cells
     users.forEach((e, index) => {
-        let row = document.createElement("tr");
-        row.id = index;
-        if (e.gender === 'male') {
-            mans++;
-        } else if (e.gender === 'female') {
-            womans++;
-        }
-        for (let j = 0; j < fields.length; j++) {
-            let cell = document.createElement("td");
-            cell.classList = 'cell';
-            if (e.isActive === false) {
-                cell.style.background = 'gray';
-                cell.style.color = '#fff';
+            let row = document.createElement("tr");
+            row.id = index;
+            if (e.gender === 'male') {
+                mans++;
+            } else if (e.gender === 'female') {
+                womans++;
             }
-            let content;
-            if (fields[j] === 'numbers') {
-                cell.append(index + 1);
-            }
-            if (fields[j] === 'registered') {
-                const formattedDate = e[fields[j]].split(/\s/).join('')
-                const date = new Date(`${formattedDate}`)
-                content = document.createTextNode(`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`);
-            } else if (fields[j] === 'button') {
-                cell.classList = 'cell cell-button';
-                // cell.style.display = 'flex';
-                cell.style.height = '100%';
-                // cell.style.padding = '0';
-                content = document.createElement('button');
-                content.innerHTML = 'x';
-                content.className = `remove-row-${index} content-button`;
-                if (row.lastChild.style.background === 'gray') {
-                    content.style.background = 'gray';
-                    // content.style.padding = '10px';
-                } else {
-                    content.style.background = '#f8e391';
+            for (let j = 0; j < fields.length; j++) {
+                let cell = document.createElement("td");
+                cell.classList = 'cell';
+                if (e.isActive === false) {
+                    cell.style.background = 'gray';
+                    cell.style.color = '#fff';
                 }
-                content.addEventListener('click', () => {
-                    let containerDelRow = document.createElement('div');
-                    containerDelRow.classList = 'login';
-                    document.body.append(containerDelRow);
-                    let DelRow = document.createElement('div');
-                    DelRow.classList = 'login-form';
-                    DelRow.innerHTML = 'Вы действительно хотите удалить информацию о пользователе ' + e.name + '?';
-                    containerDelRow.append(DelRow);
-                    let containerDelRowButton = document.createElement('div');
-                    DelRow.append(containerDelRowButton);
-                    for (let i = 0; i < 2; i++) {
-                        let DelRowButton = document.createElement('button');
-                        if (i === 0) {
-                            DelRowButton.innerHTML = 'Подтвердить';
-                            DelRowButton.classList = 'del-row-button-ok';
-                            // DelRowButton.style.marginRight = '20px';
-                            DelRowButton.onclick = function () {
-                                document.getElementById(index).remove();
-                                containerDelRow.style.display = 'none';
+                let content;
+                if (fields[j] === 'numbers') {
+                    cell.append(index + 1);
+                }
+                if (fields[j] === 'registered') {
+                    const formattedDate = e[fields[j]].split(/\s/).join('')
+                    const date = new Date(`${formattedDate}`)
+                    content = document.createTextNode(`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`);
+                } else if (fields[j] === 'button') {
+                    cell.classList = 'cell cell-button';
+                    // cell.style.display = 'flex';
+                    cell.style.height = '100%';
+                    // cell.style.padding = '0';
+                    content = document.createElement('button');
+                    content.innerHTML = 'x';
+                    content.className = `remove-row-${index} content-button`;
+                    if (row.lastChild.style.background === 'gray') {
+                        content.style.background = 'gray';
+                        // content.style.padding = '10px';
+                    } else {
+                        content.style.background = '#f8e391';
+                    }
+                    content.addEventListener('click', () => {
+                        let containerDelRow = document.createElement('div');
+                        containerDelRow.classList = 'login';
+                        document.body.append(containerDelRow);
+                        let DelRow = document.createElement('div');
+                        DelRow.classList = 'login-form';
+                        DelRow.innerHTML = 'Вы действительно хотите удалить информацию о пользователе ' + e.name + '?';
+                        containerDelRow.append(DelRow);
+                        let containerDelRowButton = document.createElement('div');
+                        DelRow.append(containerDelRowButton);
+                        for (let i = 0; i < 2; i++) {
+                            let DelRowButton = document.createElement('button');
+                            if (i === 0) {
+                                DelRowButton.innerHTML = 'Подтвердить';
+                                DelRowButton.classList = 'del-row-button-ok';
+                                // DelRowButton.style.marginRight = '20px';
+                                DelRowButton.onclick = function() {
+                                    document.getElementById(index).remove();
+                                    containerDelRow.style.display = 'none';
 
-                                let info = document.createElement('div');
-                                info.innerHTML = 'Данные о пользователе удалены';
-                                info.classList = 'info';
+                                    let info = document.createElement('div');
+                                    info.innerHTML = 'Данные о пользователе удалены';
+                                    info.classList = 'info';
 
-                                let closeinfo = document.createElement('span');
-                                closeinfo.classList = 'close-info';
-                                info.append(closeinfo);
-                                clients.append(info);
-                                // closeinfo.onclick() = function() {
-                                //     info.style.display = 'none';
-                                // }
+                                    let closeinfo = document.createElement('span');
+                                    closeinfo.classList = 'close-info';
+                                    info.append(closeinfo);
+                                    clients.append(info);
+                                    // closeinfo.onclick() = function() {
+                                    //     info.style.display = 'none';
+                                    // }
 
-                                function infoHide() {
-                                    info.style.display = 'none';
+                                    function infoHide() {
+                                        info.style.display = 'none';
+                                    }
+                                    setTimeout(infoHide, 2000)
                                 }
-                                setTimeout(infoHide, 2000)
+                            } else if (i === 1) {
+                                DelRowButton.innerHTML = 'Отмена';
+                                DelRowButton.classList = 'del-row-button-no';
+                                DelRowButton.onclick = function() {
+                                    containerDelRow.style.display = 'none';
+                                }
                             }
-                        } else if (i === 1) {
-                            DelRowButton.innerHTML = 'Отмена';
-                            DelRowButton.classList = 'del-row-button-no';
-                            DelRowButton.onclick = function () {
-                                containerDelRow.style.display = 'none';
+                            containerDelRowButton.append(DelRowButton);
+                        }
+                        window.onclick = function(event) {
+                            if (event.target === containerDelRow) {
+                                containerDelRow.style.display = "none";
                             }
                         }
-                        containerDelRowButton.append(DelRowButton);
-                    }
-                    window.onclick = function (event) {
-                        if (event.target === containerDelRow) {
-                            containerDelRow.style.display = "none";
-                        }
-                    }
-                })
-            } else {
-                content = document.createTextNode(e[fields[j]]);
-            }
-            if (fields[j] === 'numbers') { } else {
-                cell.appendChild(content);
-            }
+                    })
+                } else {
+                    content = document.createTextNode(e[fields[j]]);
+                }
+                if (fields[j] === 'numbers') {} else {
+                    cell.appendChild(content);
+                }
 
-            row.appendChild(cell);
-        }
-        // add the row to the end of the table body
-        tblBody.appendChild(row);
-    })
-    // put the <tbody> in the <table>
+                row.appendChild(cell);
+            }
+            // add the row to the end of the table body
+            tblBody.appendChild(row);
+        })
+        // put the <tbody> in the <table>
     tbl.appendChild(tblBody);
     // appends <table> into <body>
     clients.appendChild(tbl);
@@ -276,7 +277,7 @@ goUp.innerHTML = 'К началу страницы';
 goUp.classList = 'go-up';
 clients.append(goUp);
 
-goUp.onclick = function () {
+goUp.onclick = function() {
     window.scrollTo(0, 0);
     // clients.scrollTo(0, 0);
 }
