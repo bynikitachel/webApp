@@ -203,7 +203,7 @@ function generateTable(users) {
                     }
                     content.addEventListener('click', () => {
                         let containerDelRow = document.createElement('div');
-                        containerDelRow.classList = 'login';
+                        containerDelRow.classList = 'delete-row-container';
                         document.body.append(containerDelRow);
                         let DelRow = document.createElement('div');
                         DelRow.classList = 'login-form';
@@ -219,7 +219,7 @@ function generateTable(users) {
                                 // DelRowButton.style.marginRight = '20px';
                                 DelRowButton.onclick = function() {
                                     document.getElementById(index).remove();
-                                    containerDelRow.style.display = 'none';
+                                    containerDelRow.remove();
 
                                     let info = document.createElement('div');
                                     info.innerHTML = 'Данные о пользователе удалены';

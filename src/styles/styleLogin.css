@@ -1,4 +1,5 @@
-.container-login {
+.container-login,
+.delete-row-container {
     z-index: 1;
     left: 0;
     top: 0;
@@ -9,6 +10,10 @@
     /* background-color: rgba(0, 0, 0, 0.4); */
     overflow: hidden;
     display: flex;
+}
+
+.delete-row-container {
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .login-form,

@@ -35,8 +35,6 @@ window.onload = function(event) {
                 old_elem.append(e);
             }
         }
-        // variable = e;
-        // return variable;
     }
 
     //container for modal
@@ -54,14 +52,16 @@ window.onload = function(event) {
     createElement('div', { 'class': 'description-form' }, _, 'Введите ваш E-mail:', 'Form', 'after');
     createElement('input', { 'class': 'input-mail', 'placeholder': 'Почта', 'required': '1' }, _, _, 'Form', 'after');
 
-    let formatMailErrorWindow = document.createElement('div');
+
 
     function appendError() {
+        let formatMailErrorWindow = document.createElement('div');
         formatMailErrorWindow.innerHTML = 'Неверный формат Email';
         formatMailErrorWindow.classList = 'format-mail-error-window';
         Form.append(formatMailErrorWindow);
     }
     appendError();
+    // createElement('div', { 'class': 'format-mail-error-window', 'id': 'Form' }, _, _, 'login-form', 'after');
 
     //pass
     createElement('div', { 'class': 'description-form' }, _, 'Введите ваш пароль:', 'Form', 'after');
@@ -124,6 +124,7 @@ window.onload = function(event) {
 
     btnSign.onclick = function(event) {
         event.preventDefault();
+        invalidDataMessage.style.display = 'none';
 
         formatMailError();
         if (formatMailError() === 0) {
@@ -159,6 +160,7 @@ window.onload = function(event) {
 
     btnLogin.onclick = function(event) {
         event.preventDefault();
+        formatMailErrorWindow.style.display = 'none';
         let users = JSON.parse(localStorage.getItem('RegisteredUsers'));
         console.log(users);
         let chekedUser = users.find((e) => e.mail === inputEmail.value && e.pass === inputPassword.value);
@@ -166,8 +168,9 @@ window.onload = function(event) {
             localStorage.setItem('loggedIn', true)
 
 
-            loginForm.style.display = 'none';
+            // containerLogin.style.display = 'none';
             // let loginDone = document.createElement('div');
+            let loginDone = document.createElement('div');
             loginDone.innerHTML = 'Вы успешно вошли!';
             loginDone.classList = 'login-done';
             containerLogin.append(loginDone);
